@@ -15,6 +15,9 @@ Thumbs.db
 # AWS
 .aws/
 
+# Wrangler
+.wrangler/
+
 # Env
 .env
 *.csv
