@@ -32,16 +32,13 @@ public class TarotDeck {
         new TarotCard(21, "The World", "세계", "완성, 성취, 통합", "미완성, 지연")
     );
 
-    public static List<DrawnCard> drawCards(int count) {
-        List<Integer> indices = new ArrayList<>();
-        for (int i = 0; i < MAJOR_ARCANA.size(); i++) {
-            indices.add(i);
-        }
-        Collections.shuffle(indices, ThreadLocalRandom.current());
-
+    public static List<DrawnCard> drawByIds(List<Integer> cardIds) {
         List<DrawnCard> drawn = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            TarotCard card = MAJOR_ARCANA.get(indices.get(i));
+        for (int id : cardIds) {
+            if (id < 0 || id >= MAJOR_ARCANA.size()) {
+                throw new IllegalArgumentException("Invalid card id: " + id);
+            }
+            TarotCard card = MAJOR_ARCANA.get(id);
             boolean isReversed = ThreadLocalRandom.current().nextBoolean();
             drawn.add(new DrawnCard(card, isReversed));
         }
