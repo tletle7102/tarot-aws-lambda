@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 타로 리딩</title>
+    <title>타로셸 - TaroShell</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🔮 AI 타로 리딩</h1>
+            <h1>타로셸</h1>
             <p class="subtitle">당신의 고민을 타로 카드에 물어보세요</p>
         </header>
 
         <main>
+            <!-- Step 1: 고민 입력 -->
             <section id="input-section">
                 <form id="tarot-form">
                     <label for="concern">무엇이 고민인가요?</label>
@@ -25,42 +26,63 @@
                         required
                     ></textarea>
                     <div class="char-count"><span id="char-count">0</span>/500</div>
-                    <button type="submit" id="submit-btn">카드 뽑기 🃏</button>
+                    <button type="submit" id="submit-btn">카드 선택하기</button>
                 </form>
             </section>
 
-            <section id="loading-section" class="hidden">
-                <div class="loading-cards">
-                    <div class="card-back flip-1">🂠</div>
-                    <div class="card-back flip-2">🂠</div>
-                    <div class="card-back flip-3">🂠</div>
-                </div>
-                <p class="loading-text">카드를 섞고 있습니다...</p>
+            <!-- Step 2: 부채꼴 카드 선택 -->
+            <section id="pick-section" class="hidden">
+                <p class="pick-guide">카드를 <strong>3장</strong> 선택해주세요 <span id="pick-count">(0/3)</span></p>
+                <div id="fan-container" class="fan-container"></div>
+                <button id="read-btn" class="read-btn hidden">선택한 카드로 리딩하기</button>
             </section>
 
+            <!-- Step 3: 로딩 -->
+            <section id="loading-section" class="hidden">
+                <div class="mystic-loading">
+                    <div class="mystic-glow"></div>
+                    <div class="mystic-cards">
+                        <div class="mystic-card mc-1"><img src="images/back.png" alt="card"></div>
+                        <div class="mystic-card mc-2"><img src="images/back.png" alt="card"></div>
+                        <div class="mystic-card mc-3"><img src="images/back.png" alt="card"></div>
+                    </div>
+                    <div class="mystic-particles">
+                        <span></span><span></span><span></span>
+                        <span></span><span></span><span></span>
+                        <span></span><span></span>
+                    </div>
+                </div>
+                <p class="loading-text" id="mystic-message"></p>
+            </section>
+
+            <!-- Step 4: 결과 -->
             <section id="result-section" class="hidden">
                 <div class="cards-display">
                     <div class="card-slot" id="card-past">
                         <div class="card-label">과거</div>
-                        <div class="card-face"></div>
+                        <div class="card-img-wrap"></div>
                         <div class="card-name"></div>
                         <div class="card-meaning"></div>
                     </div>
                     <div class="card-slot" id="card-present">
                         <div class="card-label">현재</div>
-                        <div class="card-face"></div>
+                        <div class="card-img-wrap"></div>
                         <div class="card-name"></div>
                         <div class="card-meaning"></div>
                     </div>
                     <div class="card-slot" id="card-future">
                         <div class="card-label">미래</div>
-                        <div class="card-face"></div>
+                        <div class="card-img-wrap"></div>
                         <div class="card-name"></div>
                         <div class="card-meaning"></div>
                     </div>
                 </div>
                 <div id="reading-text" class="reading-text"></div>
-                <button id="retry-btn" class="retry-btn">다시 뽑기 🔄</button>
+                <div class="share-area">
+                    <button id="share-btn" class="share-btn">결과 공유하기</button>
+                    <div id="share-toast" class="share-toast hidden">링크가 복사되었습니다!</div>
+                </div>
+                <button id="retry-btn" class="retry-btn">다시 뽑기</button>
             </section>
         </main>
 
