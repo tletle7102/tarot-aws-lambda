@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version '8.3.5'
+}
+
+group = 'com.tarot'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.3'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.14.0'
+    implementation 'com.google.code.gson:gson:2.11.0'
+    implementation 'software.amazon.awssdk:ssm:2.29.0'
+}
+
+shadowJar {
+    archiveBaseName.set('tarot-lambda')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
+
+build.dependsOn shadowJar

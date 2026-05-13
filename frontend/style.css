@@ -1,0 +1,225 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #e0d8f0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 720px;
+    width: 100%;
+    padding: 2rem 1.5rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    font-size: 2rem;
+    background: linear-gradient(90deg, #c9a0dc, #f6d365);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    margin-top: 0.5rem;
+    color: #a89cc8;
+    font-size: 0.95rem;
+}
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+label {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+textarea {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 1rem;
+    color: #e0d8f0;
+    font-size: 1rem;
+    resize: none;
+    transition: border-color 0.2s;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #c9a0dc;
+}
+
+.char-count {
+    text-align: right;
+    font-size: 0.8rem;
+    color: #8878a8;
+}
+
+button {
+    padding: 0.9rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.15s, opacity 0.2s;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+#submit-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+#submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.retry-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #c9a0dc;
+    border: 1px solid rgba(201, 160, 220, 0.3) !important;
+    margin-top: 1.5rem;
+}
+
+/* Loading */
+.loading-cards {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0 1rem;
+}
+
+.card-back {
+    font-size: 4rem;
+    animation: flipCard 1.2s ease-in-out infinite;
+}
+
+.flip-1 { animation-delay: 0s; }
+.flip-2 { animation-delay: 0.2s; }
+.flip-3 { animation-delay: 0.4s; }
+
+@keyframes flipCard {
+    0%, 100% { transform: rotateY(0deg); }
+    50% { transform: rotateY(180deg); }
+}
+
+.loading-text {
+    text-align: center;
+    color: #a89cc8;
+    font-size: 1rem;
+}
+
+/* Result */
+.cards-display {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+}
+
+.card-slot {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 1.2rem 1rem;
+    text-align: center;
+    width: 200px;
+    animation: fadeInUp 0.5s ease-out both;
+}
+
+.card-slot:nth-child(1) { animation-delay: 0.1s; }
+.card-slot:nth-child(2) { animation-delay: 0.3s; }
+.card-slot:nth-child(3) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #a89cc8;
+    margin-bottom: 0.5rem;
+}
+
+.card-face {
+    font-size: 3rem;
+    margin: 0.5rem 0;
+}
+
+.card-name {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.card-meaning {
+    font-size: 0.8rem;
+    color: #a89cc8;
+}
+
+.card-reversed .card-face {
+    transform: rotate(180deg);
+    color: #e07878;
+}
+
+.reading-text {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    padding: 1.5rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    font-size: 0.95rem;
+    animation: fadeInUp 0.5s ease-out 0.7s both;
+}
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.75rem;
+    color: #6a6080;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .cards-display {
+        flex-direction: column;
+        align-items: center;
+    }
+    .card-slot {
+        width: 100%;
+        max-width: 280px;
+    }
+    header h1 {
+        font-size: 1.6rem;
+    }
+}
