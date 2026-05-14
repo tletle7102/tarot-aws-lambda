@@ -1,7 +1,7 @@
 # 타로셸 (TaroShell)
 
-AI 타로 마스터가 당신의 고민을 카드로 해석해주는 서버리스 웹 서비스
-<img src="docs/taroshell_main.png" alt="taroshell_main" width="720">
+AI 타로 마스터가 당신의 고민을 카드로 해석해주는 서버리스 웹 서비스  
+<img src="docs/taroshell_main.png" alt="taroshell_main" width="600">
 
 ![Java](https://img.shields.io/badge/Java-21-blue)
 ![AWS Lambda](https://img.shields.io/badge/AWS-Lambda-FF9900)
@@ -17,34 +17,32 @@ AI 타로 마스터가 당신의 고민을 카드로 해석해주는 서버리�
 
 ## 🏗️ 시스템 아키텍처
 
-```
-┌─────────────────┐         ┌──────────────────┐         ┌────────────────┐
-│  Cloudflare     │  HTTPS  │  API Gateway     │         │  Lambda        │
-│  Pages (CDN)    │         │  (HTTP API)      │────────▶│  (Java 21)     │
-│                 │         │                  │         │                │
-│  - index.html   │         │  POST /reading   │         │  TarotHandler  │
-│  - style.css    │         │  GET  /reading/  │         │  GeminiClient  │
-│  - script.js    │         │       {id}       │         │  TarotDeck     │
-│  - images/      │         │                  │         │                │
-└────────┬────────┘         └──────────────────┘         └───┬────────┬───┘
-         │                                                   │        │
-         │  정적 파일 서빙                          Gemini API│        │DynamoDB
-         ▼                                                   ▼        ▼
-    사용자 브라우저                                ┌──────────┐  ┌──────────┐
-                                                  │ Google   │  │ DynamoDB │
-                                                  │ Gemini   │  │ (결과    │
-                                                  │ 2.5      │  │  저장)   │
-                                                  │ Flash    │  │          │
-                                                  │ Lite     │  │          │
-                                                  └──────────┘  └──────────┘
-                                                        ▲
-                                                        │
-                                                  ┌──────────┐
-                                                  │ SSM      │
-                                                  │ Parameter│
-                                                  │ Store    │
-                                                  │ (API Key)│
-                                                  └──────────┘
+<img src="docs/sys_arch.png" alt="sys_arch" width="1000">
+
+### 🎨 Mermaid Live
+```mermaid
+flowchart LR
+    User([사용자 브라우저])
+
+    subgraph Frontend["프론트엔드"]
+        CFP["Cloudflare Pages<br/>정적 자원 CDN"]
+    end
+
+    subgraph AWS["AWS"]
+        APIGW["API Gateway (HTTP API)<br/>POST /reading<br/>GET /reading/:id"]
+        Lambda["Lambda - Java 21<br/>TarotHandler<br/>GeminiClient<br/>TarotDeck"]
+        DDB[("DynamoDB<br/>리딩 결과 저장")]
+        SSM[/"SSM Parameter Store<br/>Gemini API Key"/]
+    end
+
+    Gemini["Google Gemini<br/>2.5 Flash Lite"]
+
+    User -->|정적 파일 요청| CFP
+    User -->|API 호출 HTTPS| APIGW
+    APIGW --> Lambda
+    Lambda -->|타로 해석 요청| Gemini
+    Lambda -->|결과 저장 / 조회| DDB
+    SSM -.->|API Key 조회| Lambda
 ```
 
 ---
